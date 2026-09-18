@@ -1,0 +1,6 @@
+notes.txt from Java: 86ec9edaeed66b8ffa176290232dcb235faca72442d8910112a84ffbda92010a
+notes.txt from the terminal: 86ec9edaeed66b8ffa176290232dcb235faca72442d8910112a84ffbda92010a
+Terminal command used: shasum -a 256 JavaFileSystem/notes.txt
+Empty file, both ways: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+notes.txt after changing one character, from Java: 4498e70769b633d5220cb8e8b5b150cfe021ad1340c6a454f135e3cdf0ac3418
+notes.txt after changing one character, from the terminal: 4498e70769b633d5220cb8e8b5b150cfe021ad1340c6a454f135e3cdf0ac3418
