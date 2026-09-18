@@ -38,6 +38,51 @@ public class FileHasher {
 
             // TODO (FH-3): read each file back, print it, and write all three into
             // Backup/backup.txt
+
+            //make the Backup directory
+            File backupDirectory = new File(directory, "Backup");
+            if (!backupDirectory.exists()) {
+                backupDirectory.mkdir();
+            }
+
+            //create the backup file and its writer
+            File backup = new File(backupDirectory, "backup.txt");
+            FileWriter backupWriter = new FileWriter(backup);
+
+            //Read the file and write it into backup
+            BufferedReader notesReader = new BufferedReader(new FileReader(notes));
+            String line;
+
+            //while the current line in the file that's being read isn't null, print it and write it into backup
+            while ((line = notesReader.readLine()) != null) {
+                System.out.println(line);
+                backupWriter.write(line + "\n");
+            }
+
+            //close the reader after printing and writing
+            notesReader.close();
+
+            BufferedReader dataReader = new BufferedReader(new FileReader(data));
+
+            while ((line = dataReader.readLine()) != null) {
+                System.out.println(line);
+                backupWriter.write(line + "\n");
+            }
+
+            dataReader.close();
+
+            BufferedReader logReader = new BufferedReader(new FileReader(log));
+
+            while ((line = logReader.readLine()) != null) {
+                System.out.println(line);
+                backupWriter.write(line + "\n");
+            }
+
+            logReader.close();
+
+            //close the backupWriter after done with writing
+            backupWriter.close();
+
             // TODO (FH-4): print each file's name next to hashFile(path)
         } catch (IOException e) {
             System.out.println("File error: " + e.getMessage());
