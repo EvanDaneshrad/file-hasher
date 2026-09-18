@@ -18,16 +18,16 @@ public class FileHasher {
 
             // TODO (FH-2): create notes.txt, data.txt, log.txt and write a sentence into each
 
-            //Create the three files
+            // Create the three files
             File notes = new File(directory, "notes.txt");
             File data = new File(directory, "data.txt");
             File log = new File(directory, "log.txt");
 
-            //Write a sentence in each
+            // Write a sentence in each
             FileWriter notesWriter = new FileWriter(notes);
             notesWriter.write("These are my notes");
             notesWriter.close();
-        
+
             FileWriter dataWriter = new FileWriter(data);
             dataWriter.write("This is my data");
             dataWriter.close();
@@ -39,27 +39,28 @@ public class FileHasher {
             // TODO (FH-3): read each file back, print it, and write all three into
             // Backup/backup.txt
 
-            //make the Backup directory
+            // make the Backup directory
             File backupDirectory = new File(directory, "Backup");
             if (!backupDirectory.exists()) {
                 backupDirectory.mkdir();
             }
 
-            //create the backup file and its writer
+            // create the backup file and its writer
             File backup = new File(backupDirectory, "backup.txt");
             FileWriter backupWriter = new FileWriter(backup);
 
-            //Read the file and write it into backup
+            // Read the file and write it into backup
             BufferedReader notesReader = new BufferedReader(new FileReader(notes));
             String line;
 
-            //while the current line in the file that's being read isn't null, print it and write it into backup
+            // while the current line in the file that's being read isn't null, print it and write
+            // it into backup
             while ((line = notesReader.readLine()) != null) {
                 System.out.println(line);
                 backupWriter.write(line + "\n");
             }
 
-            //close the reader after printing and writing
+            // close the reader after printing and writing
             notesReader.close();
 
             BufferedReader dataReader = new BufferedReader(new FileReader(data));
@@ -80,10 +81,17 @@ public class FileHasher {
 
             logReader.close();
 
-            //close the backupWriter after done with writing
+            // close the backupWriter after done with writing
             backupWriter.close();
 
             // TODO (FH-4): print each file's name next to hashFile(path)
+
+            System.out.println();
+            System.out.println("--- SHA-256 ---");
+
+            System.out.println(notes.getName() + "  " + hashFile(notes.getPath()));
+            System.out.println(data.getName() + "   " + hashFile(data.getPath()));
+            System.out.println(log.getName() + "    " + hashFile(log.getPath()));
         } catch (IOException e) {
             System.out.println("File error: " + e.getMessage());
         }
@@ -95,6 +103,39 @@ public class FileHasher {
      */
     public static String hashFile(String filePath) throws IOException {
         // TODO (FH-4): read the whole file, digest it, convert the bytes to hex
-        return "";
+
+        // Create the SHA-256 calculator
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("SHA-256 algorithm is not available");
+            return "";
+        }
+
+        // create the file reader for filePath
+        FileReader reader = new FileReader(filePath);
+
+        int character;
+        // while the current character being read is valid, convert it into a byte and digest that
+        // specific byte
+        while ((character = reader.read()) != -1) {
+            digest.update((byte) character);
+        }
+
+        // close the reader
+        reader.close();
+
+        // finish hash calculations
+        byte[] hashBytes = digest.digest();
+
+        String hash = "";
+
+        // write each hash byte into a String
+        for (int i = 0; i < hashBytes.length; i++) {
+            hash += String.format("%02x", hashBytes[i]);
+        }
+
+        return hash;
     }
 }
