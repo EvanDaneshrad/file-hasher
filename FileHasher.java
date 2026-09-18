@@ -17,6 +17,25 @@ public class FileHasher {
             }
 
             // TODO (FH-2): create notes.txt, data.txt, log.txt and write a sentence into each
+
+            //Create the three files
+            File notes = new File(directory, "notes.txt");
+            File data = new File(directory, "data.txt");
+            File log = new File(directory, "log.txt");
+
+            //Write a sentence in each
+            FileWriter notesWriter = new FileWriter(notes);
+            notesWriter.write("These are my notes");
+            notesWriter.close();
+        
+            FileWriter dataWriter = new FileWriter(data);
+            dataWriter.write("This is my data");
+            dataWriter.close();
+
+            FileWriter logWriter = new FileWriter(log);
+            logWriter.write("This is my log");
+            logWriter.close();
+
             // TODO (FH-3): read each file back, print it, and write all three into
             // Backup/backup.txt
             // TODO (FH-4): print each file's name next to hashFile(path)
